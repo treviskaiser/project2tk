@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>calendar</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="public/styles/style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  </head>
+  <body>
+    <div
+      data-aos="flip-down"
+      data-aos-offset="200"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+      data-aos-easing="ease-in-out"
+      data-aos-mirror="true"
+      data-aos-once="false"
+      data-aos-anchor-placement="top-center"
+    >
+      <div class="jumbotron jumbotron-fluid">
+        <div class="jumbo-container">
+          <h1 class="display-4">Calendar</h1>
+          <p class="lead">Plan your day the smart way.</p>
+        </div>
+      </div>
+
+      <div class="month-container">
+        <div class="month">
+          <ul>
+            <li class="prev">&#10094;</li>
+            <li class="next">&#10095;</li>
+            <li>
+              <div id="month"></div>
+              <span style="font-size:18px" id="year"></span>
+            </li>
+          </ul>
+        </div>
+
+        <ul class="weekdays">
+          <li>Mo</li>
+          <li>Tu</li>
+          <li>We</li>
+          <li>Th</li>
+          <li>Fr</li>
+          <li>Sa</li>
+          <li>Su</li>
+        </ul>
+
+        <ul class="days">
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+          <li>6</li>
+          <li>7</li>
+          <li>8</li>
+          <li>9</li>
+          <li>10</li>
+          <li>11</li>
+          <li>12</li>
+          <li>13</li>
+          <li>14</li>
+          <li>15</li>
+          <li>16</li>
+          <li>17</li>
+          <li>18</li>
+          <li>19</li>
+          <li>20</li>
+          <li>21</li>
+          <li>22</li>
+          <li>23</li>
+          <li>24</li>
+          <li>25</li>
+          <li>26</li>
+          <li>27</li>
+          <li>28</li>
+          <li>29</li>
+          <li>30</li>
+          <li>31</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row seven-cols">
+        <div class="col-sm-1">
+          <div class="card" style="width: 13rem;" id="monday">
+            <div class="card-body">
+              <h5 class="card-title text-center" id="day0"></h5>
+              <p class="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+              <div id="weather-0"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-1">
+          <div class="card" style="width: 13rem;" id="tuesday">
+            <div class="card-body">
+              <h5 class="card-title text-center" id="day1"></h5>
+              <p class="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+              <div id="weather-8"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-1">
+          <div class="card" style="width: 13rem;" id="wednesday">
+            <div class="card-body">
+              <h5 class="card-title text-center" id="day2"></h5>
+              <p class="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+              <div id="weather-16"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-1">
+          <div class="card" style="width: 13rem;" id="thursday">
+            <div class="card-body">
+              <h5 class="card-title text-center" id="day3"></h5>
+              <p class="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+              <div id="weather-24"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-1">
+          <div class="card" style="width: 13rem;" id="Friday">
+            <div class="card-body">
+              <h5 class="card-title text-center" id="day4"></h5>
+              <p class="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+              <div id="weather-32"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-1">
+          <div class="card" style="width: 13rem;" id="saturday">
+            <div class="card-body">
+              <h5 class="card-title text-center" id="day5"></h5>
+              <p class="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-1">
+          <div class="card" style="width: 13rem;" id="sunday">
+            <div class="card-body">
+              <h5 class="card-title text-center" id="day6"></h5>
+              <p class="card-text">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form>
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Select Day</label>
+        <select class="form-control" id="dayOptions"> </select>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Appointment</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" />
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Time</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" />
+      </div>
+      <button type="submit" class="btn btn-primary mb-2" id="submit">
+        Submit
+      </button>
+    </form>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    // This is our API key
+    var APIKey = "40cae4c09ea811068014399388bb357e";
+
+    // Here we are building the URL we need to query the database
+    var queryURL =
+      "https://api.openweathermap.org/data/2.5/forecast?q=Dallas,US&units=imperial&appid=" +
+      APIKey;
+
+    // Here we run our AJAX call to the OpenWeatherMap API
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    })
+      // We store all of the retrieved data inside of an object called "response"
+      .then(function(response) {
+        // Transfer content to HTML
+        for (var i = 0; i < 56; i += 8) {
+          var weather = $("<div>");
+          weather.text(
+            "Forecast: " +
+              response.list[i].main.temp_max +
+              " F and " +
+              response.list[i].weather[0].main
+          );
+          $("#weather-" + [i]).append(weather);
+        }
+      });
+
+    console.log(new Date().getFullYear());
+    console.log(new Date().getMonth());
+    console.log(new Date().getDate());
+
+    var day = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ];
+
+    var month = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+    // dynamically add month and year to top of the calendar. auto updates every month.
+    $("#month").append(month[new Date().getMonth()]);
+    $("#year").append(new Date().getFullYear());
+
+    // sets first calendar column to today then adds one for the next 6 days
+    for (var i = 0; i < 7; i++) {
+      var date = $("<div>");
+      var options = $("<option>");
+      date.text(day[new Date().getDay() + i]);
+      $("#day" + i).append(date);
+    }
+
+    // sets date to first column and adds one for the next 6 days. dropown day also.
+    for (var i = 0; i < 7; i++) {
+      var currMonth = new Date().getMonth() + 1;
+      var day = new Date().getDate();
+      var dayPlus = day + i;
+      var year = new Date().getFullYear();
+      var fullDate = $("<div>");
+      var options = $("<option>");
+      fullDate.text(currMonth + "-" + dayPlus + "-" + year);
+      options.text(currMonth + "-" + dayPlus + "-" + year);
+      $("#day" + i).append(fullDate);
+      $("#dayOptions").append(options);
+    }
+
+    // will use the current date to change the date on the calander to active
+    function activeDay() {
+      var currentDay = new Date().getDate();
+      console.log(currentDay);
+      // loops through 31 days and selects current day
+      for (var i = 0; i < 31; i++) {
+        if (i === currentDay) {
+          console.log("today is" + i);
+
+          // changes the current day to active
+          var selector = ".days li";
+          var elems = document.querySelectorAll(selector);
+
+          makeActive = function(day) {
+            for (var j = 0; j < elems.length; j++) {
+              if (parseInt(elems[j].innerText) === parseInt(currentDay)) {
+                console.log(elems[j]);
+                elems[j].setAttribute("class", "active");
+              }
+            }
+          };
+          makeActive(i);
+        }
+      }
+    }
+    activeDay();
+
+    function changeMonth() {
+      var previous, next, currentMonth;
+      
+      previous = document.querySelector(".prev");
+      next = document.querySelector(".next");
+      // gets current month
+      curPrevMonth = [new Date().getMonth() - 1];
+      currentMonth = [new Date().getMonth() + 1];
+      console.log(currentMonth);
+      var selectedMonth;
+
+  
+      $(".prev").click(function() {
+       selectedMonth = curPrevMonth--
+       console.log(selectedMonth);
+
+       console.log(month[selectedMonth]);
+
+          
+          // lastMonth = month[new Date().getMonth() - 1]      
+            $('#month').text(month[selectedMonth]);
+        
+      
+       
+      
+      });
+      
+      
+
+      $(".next").click(function() {
+        selectedMonth = currentMonth++
+       console.log(selectedMonth);
+
+       console.log(month[selectedMonth]);
+
+          
+          // lastMonth = month[new Date().getMonth() - 1]      
+            $('#month').text(month[selectedMonth]);
+           
+      });
+    
+     
+    }
+    changeMonth();
+
+
+  </script>
+</html>

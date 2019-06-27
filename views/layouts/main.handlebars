@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>calendar</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="asset/css/style.css" type="text/css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+
+
+{{{body}}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+<script type="text/javascript">
+
+  // This is our API key
+  var APIKey = "40cae4c09ea811068014399388bb357e";
+
+  // Here we are building the URL we need to query the database
+  var queryURL =
+    "https://api.openweathermap.org/data/2.5/forecast?q=Dallas,US&units=imperial&appid=" +
+    APIKey;
+
+  // Here we run our AJAX call to the OpenWeatherMap API
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  })
+    // We store all of the retrieved data inside of an object called "response"
+    .then(function (response) {
+      // Transfer content to HTML
+      for (var i = 0; i < 40; i += 8) {
+        var weather = $("<div>");
+        weather.text(
+          "Forecast: " +
+          response.list[i].main.temp_max +
+          " F and " +
+          response.list[i].weather[0].main
+        );
+        $("#weather-" + [i]).append(weather);
+      }
+    });
+
+  console.log(new Date().getFullYear());
+  console.log(new Date().getMonth());
+  console.log(new Date().getDate());
+
+  var day = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+
+  var month = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+  // dynamically add month and year to top of the calendar. auto updates every month.
+  $("#month").append(month[new Date().getMonth()]);
+  $("#year").append(new Date().getFullYear());
+
+  // sets first calendar column to today then adds one for the next 6 days
+  for (var i = 0; i < 5; i++) {
+    var date = $("<div>");
+    var options = $("<option>");
+    date.text(day[new Date().getDay() + i]);
+    $("#day" + i).append(date);
+  }
+
+  // sets date to first column and adds one for the next 6 days. dropown day also.
+  for (var i = 0; i < 5; i++) {
+    var month = new Date().getMonth() + 1;
+    var day = new Date().getDate();
+    var dayPlus = day + i;
+    var year = new Date().getFullYear();
+    var fullDate = $("<div>");
+    var options = $("<option>");
+    fullDate.text(month + "-" + dayPlus + "-" + year);
+    options.text(month + "-" + dayPlus + "-" + year);
+    $("#day" + i).append(fullDate);
+    $("#dayOptions").append(options);
+  }
+
+  $("#submit").on("click", function (event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+
+    var newCalendar = {
+      dates: $("#dayOptions").val().trim(),
+      app: $("#appointment").val().trim(),
+      time: $("#time").val().trim()
+    };
+    console.log("date" + newCalendar.dates)
+    // Send the POST request.
+    $.ajax("/api/calendar", {
+      type: "POST",
+      data: newCalendar
+    }).then(
+      function () {
+        console.log("created new burger");
+        // Reload the page to get the updated list
+        location.reload()
+      }
+    );
+  });
+
+  function activeDay() {
+    var currentDay = new Date().getDate();
+    console.log(currentDay)
+    // loops through 31 days and selects current day
+    for (var i = 0; i < 31; i++) {
+      if (i === currentDay) {
+        console.log("today is" + i);
+        // changes the current day to active
+        var selector = ".days li";
+        var elems = document.querySelectorAll(selector);
+        makeActive = function (day) {
+          for (var j = 0; j < elems.length; j++) {
+            if (parseInt(elems[j].innerText) === parseInt(currentDay)) {
+              console.log(elems[j]);
+              elems[j].setAttribute("class", "active");
+            }
+          }
+        };
+        makeActive(i);
+      }
+    }
+  }
+  activeDay();
+
+
+
+  var queryURL =
+    "https://calendarific.com/api/v2/holidays?&api_key=9d3def65b84d16cc0bf7eccf0578e5945f7c0c9f&country=US&year=2019&location=US";
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function (result) {
+    console.log(result);
+    console.log(queryURL);
+    for (var h = 0; h < 317; h++) {
+      var all =
+        result.response.holidays[h].name +
+        result.response.holidays[h].date.datetime.month +
+        "-" +
+        result.response.holidays[h].date.datetime.day +
+        "-" +
+        result.response.holidays[h].date.datetime.year;
+      // console.log(all);
+      // var myjson = JSON.stringify(all);
+      // console.log(myjson);
+      // function myfunction() {
+      //   var n = myjson.includes(string);
+      //   console.log(n);
+      // }
+      // myfunction();
+    }
+    for (var i = 0; i < 317; i++) {
+      // console.log(
+      //   result.response.holidays[i].date.iso,
+      //   result.response.holidays[i].name
+      // );
+      var month = new Date().getMonth() + 1;
+      var day = new Date().getDate();
+      var dayPlus = day + i;
+      var year = new Date().getFullYear();
+      var fullday = month + "-" + day + "-" + year;
+      var fullday1 = month + "-" + (day + 1) + "-" + year;
+      var fullday2 = month + "-" + (day + 2) + "-" + year;
+      var fullday3 = month + "-" + (day + 3) + "-" + year;
+      var fullday4 = month + "-" + (day + 4) + "-" + year;
+      // console.log(fullday);
+      var holidays = result.response.holidays[i].name;
+      var holDate =
+        result.response.holidays[i].date.datetime.month +
+        "-" +
+        result.response.holidays[i].date.datetime.day +
+        "-" +
+        result.response.holidays[i].date.datetime.year;
+      console.log("fulldate" + fullday, holDate);
+      if (fullday === holDate) {
+        console.log(true);
+        var appearHol = $("#holiday-0");
+        var holiday = $("<div>");
+        holiday.append(holidays);
+        holiday.attr("class", "holiday")
+        appearHol.append(holiday);
+      }
+      if (fullday1 === holDate) {
+        console.log(true);
+        var appearHol = $("#holiday-1");
+        var holiday = $("<div>");
+        holiday.append(holidays);
+        holiday.attr("class", "holiday")
+        appearHol.append(holiday);
+      }
+      if (fullday2 === holDate) {
+        console.log(true);
+        var appearHol = $("#holiday-2");
+        var holiday = $("<div>");
+        holiday.append(holidays);
+        holiday.attr("class", "holiday")
+        appearHol.append(holiday);
+      }
+      if (fullday3 === holDate) {
+        console.log(true);
+        var appearHol = $("#holiday-3");
+        var holiday = $("<div>");
+        holiday.append(holidays);
+        holiday.attr("class", "holiday")
+        appearHol.append(holiday);
+      }
+      if (fullday4 === holDate) {
+        console.log(true);
+        var appearHol = $("#holiday-4");
+        var holiday = $("<div>");
+        holiday.append(holidays);
+        holiday.attr("class", "holiday")
+        appearHol.append(holiday);
+      }
+      // var appearHol = $("#holiday-1");
+      // var holiday = $("<div>");
+      // holiday.append(holidays);
+      // appearHol.append(holiday);
+    }
+    // holiday.attr("holiday", result.response.holidays[i].name);
+    // holiday.attr(
+    //   "date",
+    //   result.response.holidays[i].date.datetime.month +
+    //     result.response.holidays[i].date.datetime.day +
+    //     result.response.holidays[i].date.datetime.year
+    // );
+    // var hol =
+    //   result.response.holidays[i].date.datetime.month +
+    //   "-" +
+    //   result.response.holidays[i].date.datetime.day +
+    //   "-" +
+    //   result.response.holidays[i].date.datetime.year;
+    // console.log(hol);
+  });
+
+</script>
+
+</html>

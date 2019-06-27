@@ -1,0 +1,117 @@
+.jumbotron {
+  background: teal;
+  color: white;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  text-align: center;
+}
+
+.container {
+  padding: 0;
+  box-align: right;
+  margin-right: 530px;
+}
+
+.seven-cols {
+  width: 2000px;
+}
+
+.col-sm-1 {
+  max-width: 14%;
+  box-align: left;
+}
+
+.card-title {
+  background: teal;
+  color: white;
+}
+
+.form-group {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+#submit {
+  margin-left: 10px;
+}
+
+ul {
+  list-style-type: none;
+}
+body {
+  font-family: Verdana, sans-serif;
+}
+
+/* Month header */
+.month {
+  padding: 25px 25px;
+  width: 100%;
+  background: teal;
+  text-align: center;
+}
+
+/* Month list */
+.month ul {
+  margin: 0;
+  padding: 0;
+}
+
+.month ul li {
+  color: white;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+/* Previous button inside month header */
+.month .prev {
+  float: left;
+  padding-top: 10px;
+}
+
+/* Next button */
+.month .next {
+  float: right;
+  padding-top: 10px;
+}
+
+/* Weekdays (Mon-Sun) */
+.weekdays {
+  margin: 0;
+  padding: 10px 0;
+  background-color: #ddd;
+}
+
+.weekdays li {
+  display: inline-block;
+  width: 13.6%;
+  color: #666;
+  text-align: center;
+}
+
+/* Days (1-31) */
+.days {
+  padding: 10px 0;
+  background: #eee;
+  margin: 0;
+}
+
+.days li {
+  list-style-type: none;
+  display: inline-block;
+  width: 13.6%;
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: 12px;
+  color: #777;
+}
+
+/* Highlight the "current" day */
+.active {
+  padding: 5px;
+  background: #1abc9c;
+  color: white !important;
+}
+
+form {
+  width: 400px;
+}
